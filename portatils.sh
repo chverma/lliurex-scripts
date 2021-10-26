@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+
+# At the SERVER_HOST you have to run: nc -k -l 1234
+# Connect the netbooks via ethernet cable
+# Connect to devices:
+# cssh -lAdministrador $(sudo nmap -sn MY_NETWORK_IP/24 | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | tr '\n' ' ') -a 'scp myuser@MY_HOST:/path/to/this/script /tmp/portatils.sh; chmod +x /tmp/portatils.sh; ./portatils.sh'
+
 llx-guest-manager enable
 
 
