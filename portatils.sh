@@ -39,6 +39,16 @@ echo $SUDOPASSWD | sudo -S chmod 600 $SYSTEM_CONN$NEWSSID
 
 echo $SUDOPASSWD | sudo -S sed -i  -e "s/$OLD_SSID/$NEWSSID/g" -e "s/$OLD_PASSWD/$NEWPASSWD/g" -e "s/$OLD_UUID/$NEWUUID/g" $SYSTEM_CONN$NEWSSID
 
+
+## Install some packages: VirtualBox & VSCode
+echo $SUDOPASSWD | sudo -S repoman --enable 2
+echo $SUDOPASSWD | sudo -S apt update
+echo $SUDOPASSWD | sudo -S apt install virtualbox
+#wget -O /tmp/vscode.deb https://go.microsoft.com/fwlink/?LinkID=760868
+#echo $SUDOPASSWD | sudo -S dpkg -i /tmp/vscode.deb
+echo $SUDOPASSWD | sudo -S snap install --classic code
+echo $SUDOPASSWD | sudo -S repoman --disable 2
+
 ## Get the MAC address
 DEVICE=wlan0
 SERVER_HOST=REPLACE
