@@ -41,13 +41,17 @@ echo $SUDOPASSWD | sudo -S sed -i  -e "s/$OLD_SSID/$NEWSSID/g" -e "s/$OLD_PASSWD
 
 
 ## Install some packages: VirtualBox & VSCode
-echo $SUDOPASSWD | sudo -S repoman --enable 2
+echo $SUDOPASSWD | sudo -S repoman-cli -y --enable 2
 echo $SUDOPASSWD | sudo -S apt update
-echo $SUDOPASSWD | sudo -S apt install virtualbox
+echo $SUDOPASSWD | sudo -S apt install -y virtualbox
 #wget -O /tmp/vscode.deb https://go.microsoft.com/fwlink/?LinkID=760868
 #echo $SUDOPASSWD | sudo -S dpkg -i /tmp/vscode.deb
 echo $SUDOPASSWD | sudo -S snap install --classic code
-echo $SUDOPASSWD | sudo -S repoman --disable 2
+echo $SUDOPASSWD | sudo -S repoman -y --disable 2
+echo $SUDOPASSWD | sudo -S apt update
+
+echo $SUDOPASSWD | sudo -S lliurex-upgrade -u
+fusion-inventory
 
 ## Get the MAC address
 DEVICE=wlan0
