@@ -1,24 +1,25 @@
 #!/usr/bin/env bash
 
-# Habilitar repo ubuntu
-sudo repoman-cli -y --enable 2
+lliurex-version 2> /dev/null
+
+if [ $? == 0 ]
+then
+    # Habilitar repo ubuntu
+    sudo repoman-cli -y --enable 2
+fi
+
 # Actualitzar repositoris
-sudo apt update
+#sudo apt update
 # Instalar davmail
 sudo apt install davmail
-# Deshabilitar repo
-sudo repoman-cli -y --disable 2
 
-davmailServiceFile=/lib/systemd/system/davmail.service
-davmailPropertiesFile=/etc/davmail/davmail.properties
+lliurex-version 2> /dev/null
+if [ $? == 0 ]
+then
+    # Deshabilitar repo
+    sudo repoman-cli -y --disable 2
+fi
 
-# Fix bug: https://sourceforge.net/p/davmail/bugs/106/
-oldString="ExecStart=\/usr\/bin\/davmail -server \/etc\/davmail\.properties"
-newString="ExecStart=java -Djava\.net\.preferIPv4Stack=true -jar \/usr\/bin\/davmail -server \/etc\/davmail\.properties"
-sudo sed -i "s/${oldString}/${newString}/g" $davmailServiceFile
-
-sudo systemctl daemon-reload
-sudo systemctl restart davmail.service
 
 # SecureMode? 
 read -p "Vols instalar certificat SSL? (S'usa en servidors d'Internet)(y/N): " install_cert
@@ -52,5 +53,19 @@ then
     oldString="davmail.ssl.keystorePass="
     newString="davmail.ssl.keystorePass=${password}"
     sudo sed -i "s/${oldString}/${newString}/" $davmailPropertiesFile
-    sudo systemctl restart davmail.service
+
+    davmailServiceFile=/lib/systemd/system/davmail.service
+    davmailPropertiesFile=/etc/davmail/davmail.properties
+
+    # Fix bug: https://sourceforge.net/p/davmail/bugs/106/
+    # ExecStart=/usr/bin/davmail -server /etc/davmail/davmail.properties
+    oldString="ExecStart=\/usr\/bin\/davmail -server \/etc\/davmail.properties"
+    newString="ExecStart=java -Djava\.net\.preferIPv4Stack=true -jar \/usr\/bin\/davmail -server \/etc\/davmail\.properties"
+    echo "s/${oldString}/${newString}/g" $davmailServiceFile
+    echo 
+    sudo sed  "s/${oldString}/${newString}/g" $davmailServiceFile
 fi
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart davmail.service
