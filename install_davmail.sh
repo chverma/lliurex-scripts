@@ -21,7 +21,7 @@ fi
 
 
 # SecureMode? 
-read -p "Vols instalar certificat SSL? (S'usa en servidors d'Internet)(y/N): " install_cert
+read -p "Vols instal·lar certificat SSL? (S'usa en servidors d'Internet)(y/N): " install_cert
 install_cert=${install_cert:-n}
 
 if [ $install_cert == "y" ]
