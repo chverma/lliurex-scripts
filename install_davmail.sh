@@ -26,43 +26,41 @@ install_cert=${install_cert:-n}
 
 if [ $install_cert == "y" ]
 then
+    davmailServiceFile=/lib/systemd/system/davmail.service
+    davmailPropertiesFile=/etc/davmail/davmail.properties
     password=`openssl rand -hex 4`
 
     read -p "Nom del host (host.domain.com o domain.com): " serverName
     read -p "Nom del l'organització (IES La Lluna): " orgName
-
+    sudo rm /etc/davmail/davmail.p12
     sudo keytool -genkey -keyalg rsa -keysize 2048 -storepass $password -keystore /etc/davmail/davmail.p12 -storetype pkcs12 -validity 3650 -dname cn=$serverName,ou=$orgName,o=sf,o=net
     
     #davmail.ssl.keystoreType=PKCS12
-    oldString="davmail.ssl.keystoreType="
+    oldString="#davmail.ssl.keystoreType="
     newString="davmail.ssl.keystoreType=PKCS12"
     sudo sed -i "s/${oldString}/${newString}/" $davmailPropertiesFile
-    
+ 
     #davmail.ssl.keyPass=password
-    oldString="davmail.ssl.keyPass="
+    oldString="#davmail.ssl.keyPass="
     newString="davmail.ssl.keyPass=${password}"
     sudo sed -i "s/${oldString}/${newString}/" $davmailPropertiesFile
 
     #davmail.ssl.keystoreFile=/etc/davmail/davmail.p12
-    oldString="davmail.ssl.keystoreFile="
+    oldString="#davmail.ssl.keystoreFile=\/etc\/davmail\/keystoreFile"
     newString="davmail.ssl.keystoreFile=\/etc\/davmail\/davmail.p12"
     sudo sed -i "s/${oldString}/${newString}/" $davmailPropertiesFile
 
     #davmail.ssl.keystorePass=password
-    oldString="davmail.ssl.keystorePass="
+    oldString="#davmail.ssl.keystorePass="
     newString="davmail.ssl.keystorePass=${password}"
     sudo sed -i "s/${oldString}/${newString}/" $davmailPropertiesFile
 
-    davmailServiceFile=/lib/systemd/system/davmail.service
-    davmailPropertiesFile=/etc/davmail/davmail.properties
+    
 
     # Fix bug: https://sourceforge.net/p/davmail/bugs/106/
-    # ExecStart=/usr/bin/davmail -server /etc/davmail/davmail.properties
-    oldString="ExecStart=\/usr\/bin\/davmail -server \/etc\/davmail.properties"
+    oldString="ExecStart=\/usr\/bin\/davmail -server \/etc\/davmail\/davmail.properties"
     newString="ExecStart=java -Djava\.net\.preferIPv4Stack=true -jar \/usr\/bin\/davmail -server \/etc\/davmail\.properties"
-    echo "s/${oldString}/${newString}/g" $davmailServiceFile
-    echo 
-    sudo sed  "s/${oldString}/${newString}/g" $davmailServiceFile
+    sudo sed  -i "s/${oldString}/${newString}/g" $davmailServiceFile
 fi
 
 
