@@ -1,20 +1,19 @@
 #!/usr/bin/env bash
 
 lliurex-version 2> /dev/null
-
-if [ $? == 0 ]
+if [ $? -eq 0 ]
 then
     # Habilitar repo ubuntu
     sudo repoman-cli -y --enable 2
 fi
 
 # Actualitzar repositoris
-#sudo apt update
+sudo apt update
 # Instalar davmail
 sudo apt install davmail
 
 lliurex-version 2> /dev/null
-if [ $? == 0 ]
+if [ $? -eq 0 ]
 then
     # Deshabilitar repo
     sudo repoman-cli -y --disable 2
