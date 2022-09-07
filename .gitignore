@@ -1,2 +1,6 @@
-*.json
-
+ldap/node_modules/*
+ldap/package-lock.json
+ldap/llxgesc.dat
+ldap/llum_data.json
+ldap/new_llum_data.json
+ldap/password.pdf

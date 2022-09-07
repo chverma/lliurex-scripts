@@ -27,6 +27,7 @@ install_cert=${install_cert:-n}
 if [ $install_cert == "y" ]
 then
     davmailServiceFile=/lib/systemd/system/davmail.service
+    # TODO: Adapt to Debian: /etc/davmail.properties
     davmailPropertiesFile=/etc/davmail/davmail.properties
     password=`openssl rand -hex 4`
 
@@ -35,6 +36,8 @@ then
     sudo rm /etc/davmail/davmail.p12
     sudo keytool -genkey -keyalg rsa -keysize 2048 -storepass $password -keystore /etc/davmail/davmail.p12 -storetype pkcs12 -validity 3650 -dname cn=$serverName,ou=$orgName,o=sf,o=net
     
+    # TODO: search on properties in order to get # or not in ssl params
+
     #davmail.ssl.keystoreType=PKCS12
     oldString="#davmail.ssl.keystoreType="
     newString="davmail.ssl.keystoreType=PKCS12"
