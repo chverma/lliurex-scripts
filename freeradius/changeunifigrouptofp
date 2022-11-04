@@ -1,0 +1,12 @@
+# -*- text -*-
+exec changeunifigrouptofp {
+
+        wait = no
+
+        program = "/bin/changeunifigroup/changeUnifiUserGroup.py  %{Calling-Station-Id} 0"
+
+        input_pairs = request
+
+        shell_escape = yes
+
+}
