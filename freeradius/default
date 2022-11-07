@@ -697,35 +697,35 @@ session {
 #  Once we KNOW that the user has been authenticated, there are
 #  additional steps we can take.
 post-auth {
-				if (LDAP-Group == "aula22a") {
+                if (LDAP-Group == "aula22a") {
                         update reply {
                             Tunnel-type = VLAN
                             Tunnel-medium-type = 6
                             Tunnel-Private-Group-Id = 21
                         }
                         changeunifigrouptofp
-                } else if (LDAP-Group == "aula23a") {
+                } elsif (LDAP-Group == "aula23a") {
                         update reply {
                             Tunnel-type = VLAN
                             Tunnel-medium-type = 6
                             Tunnel-Private-Group-Id = 22
                         }
                         changeunifigrouptofp
-                } else if (LDAP-Group == "aula27a") {
+                } elsif (LDAP-Group == "aula27a") {
                         update reply {
                             Tunnel-type = VLAN
                             Tunnel-medium-type = 6
                             Tunnel-Private-Group-Id = 27
                         }
                         changeunifigrouptofp
-                } else if (LDAP-Group == "aula28a") {
+                } elsif (LDAP-Group == "aula28a") {
                         update reply {
                             Tunnel-type = VLAN
                             Tunnel-medium-type = 6
                             Tunnel-Private-Group-Id = 28
                         }
                         changeunifigrouptofp
-                } else if (LDAP-Group == "aula32a") {
+                } elsif (LDAP-Group == "aula32a") {
                         update reply {
                             Tunnel-type = VLAN
                             Tunnel-medium-type = 6

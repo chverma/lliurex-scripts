@@ -1,6 +1,6 @@
 setup: changeunifigrouptodefault changeunifigrouptodefault filter eap changeUnifiUserGroup.py
     ## Create install directory
-	mkdir -p /usr/bin/changeunifigroup/
+	mkdir -p /usr/bin/changeunifigroup/backup
 	cp default /usr/bin/changeunifigroup/default
 	cp eap /usr/bin/changeunifigroup/eap
 	cp filter /usr/bin/changeunifigroup/filter
@@ -9,9 +9,9 @@ setup: changeunifigrouptodefault changeunifigrouptodefault filter eap changeUnif
 	cp changeUnifiUserGroup.py /usr/bin/changeunifigroup/changeUnifiUserGroup.py
 
 	## Backup files
-	mv /etc/freeradius/3.0/sites-available/default /etc/freeradius/3.0/sites-available/default.backup
-	mv /etc/freeradius/3.0/mods-enabled/eap /etc/freeradius/3.0/mods-enabled/eap.backup
-	mv /etc/freeradius/3.0/policy.d/filter /etc/freeradius/3.0/policy.d/filter.backup
+	mv /etc/freeradius/3.0/sites-available/default /usr/bin/changeunifigroup/backup/default.backup
+	mv /etc/freeradius/3.0/mods-enabled/eap /usr/bin/changeunifigroup/backup/eap.backup
+	mv /etc/freeradius/3.0/policy.d/filter /usr/bin/changeunifigroup/backup/filter.backup
 
 	## Create symbolic links
 	ln -s /usr/bin/changeunifigroup/changeunifigrouptodefault /etc/freeradius/3.0/mods-enabled/changeunifigrouptodefault
@@ -24,8 +24,8 @@ setup: changeunifigrouptodefault changeunifigrouptodefault filter eap changeUnif
 test:
 	freeradius -X
 clean:
-	mv /etc/freeradius/3.0/sites-available/default.backup /etc/freeradius/3.0/sites-available/default
-	mv /etc/freeradius/3.0/mods-enabled/eap.backup /etc/freeradius/3.0/mods-enabled/eap
-	mv /etc/freeradius/3.0/policy.d/filter.backup /etc/freeradius/3.0/policy.d/filter
+	mv /usr/bin/changeunifigroup/backup/default.backup /etc/freeradius/3.0/sites-available/default
+	mv /usr/bin/changeunifigroup/backup/eap.backup /etc/freeradius/3.0/mods-enabled/eap
+	mv /usr/bin/changeunifigroup/backup/filter.backup /etc/freeradius/3.0/policy.d/filter
 	rm /etc/freeradius/3.0/mods-enabled/changeunifigrouptofp
 	rm /etc/freeradius/3.0/mods-enabled/changeunifigrouptodefault
