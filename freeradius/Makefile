@@ -1,5 +1,10 @@
 setup: changeunifigrouptodefault changeunifigrouptodefault filter eap changeUnifiUserGroup.py
-    ## Create install directory
+    ## Install dependencies
+	sudo repoman-cli -e 2
+	sudo apt update
+	sudo apt install -y python3-dotenv
+	sudo repoman-cli -d 2
+	## Create install directory
 	mkdir -p /usr/bin/changeunifigroup/backup
 	cp default /usr/bin/changeunifigroup/default
 	cp eap /usr/bin/changeunifigroup/eap
@@ -26,6 +31,6 @@ test:
 clean:
 	mv /usr/bin/changeunifigroup/backup/default.backup /etc/freeradius/3.0/sites-available/default
 	mv /usr/bin/changeunifigroup/backup/eap.backup /etc/freeradius/3.0/mods-enabled/eap
-	mv /usr/bin/changeunifigroup/backup/filter.backup /etc/freeradius/3.0/policy.d/filter
+	mv /usr/bin/changeunifigroup/backup	/filter.backup /etc/freeradius/3.0/policy.d/filter
 	rm /etc/freeradius/3.0/mods-enabled/changeunifigrouptofp
 	rm /etc/freeradius/3.0/mods-enabled/changeunifigrouptodefault
